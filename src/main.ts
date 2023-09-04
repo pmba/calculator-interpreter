@@ -3,25 +3,31 @@ Expression -> Expression '+' Term
 | Expression '-' Term
 | Term
 
-Term ->  ( Expression )
-| Term \* Factor
-| Term / Factor
+Term ->  Term '*' Factor
+| Term '/' Factor
 | Factor
 
-Factor -> Number
-| ( Expression )
-
-Number -> Digit Number
-| Digit
-
-Digit -> '0-9'
+Factor -> ( Expression )
+| Number
 */
 
 import { Interpreter } from "./steps/interpreter";
 import { Lexer } from "./steps/lexer";
 import { Parser } from "./steps/parser";
 
-export function evalInput(input: string) {
+const exprInput = document.getElementById("expr-input") as HTMLInputElement;
+const submitBtn = document.getElementById("submit-btn") as HTMLButtonElement;
+
+submitBtn.onclick = () => {
+  const input = exprInput.value;
+
+  if (!input) return;
+  const result = evalInput(input);
+
+  exprInput.value = result.toString();
+};
+
+function evalInput(input: string) {
   const lexer = new Lexer(input);
   const tokens = lexer.tokenize();
 
@@ -37,7 +43,7 @@ export function evalInput(input: string) {
 }
 
 function main() {
-  const input = "(10.5/2)*4/5";
+  const input = "(1 + 2) * (3 - 4) / 5";
   const result = evalInput(input);
 
   console.log(result);

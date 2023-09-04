@@ -1,4 +1,4 @@
-import { TokenMatch, TokenOperators, TokenType } from "../shared/token/types";
+import { TokenMatch, TokenType } from "../shared/token/types";
 
 export interface TreeNode {
   key: string;
@@ -9,7 +9,7 @@ export interface TreeNode {
 
 function throwUnexpectedToken(token: TokenMatch): never {
   console.log(token);
-  throw new Error(`Unexpected token: '${token.match}' at ${token.col}`);
+  throw new SyntaxError(`Unexpected token: '${token.match}' at ${token.col}`);
 }
 
 export class Parser {
@@ -27,76 +27,51 @@ export class Parser {
   public parse(): TreeNode {
     let ast = this.parseExpression();
 
-    const operations: TokenOperators[] = ["PLUS", "MINUS", "MUL", "DIV"];
-
-    while (this.token()) {
-      if (!operations.includes(this.token().type as TokenOperators)) {
-        throwUnexpectedToken(this.token());
-      }
-
-      const key = this.token().match;
-      const type = this.token().type;
-      ++this.tokenIdx;
-
-      const operator: TreeNode = {
-        key,
-        type,
-        left: ast,
-        right: this.parseExpression(),
-      };
-
-      ast = operator;
-    }
-
     return ast;
   }
 
   private parseExpression(): TreeNode {
-    const expression = this.parseTerm();
+    let expression = this.parseTerm();
 
-    if (
-      !this.token() ||
-      (this.token().type !== "PLUS" && this.token().type !== "MINUS")
+    while (
+      this.token() &&
+      (this.token().type === "PLUS" || this.token().type === "MINUS")
     ) {
-      return expression;
+      const key = this.token().match;
+      const type = this.token().type;
+      ++this.tokenIdx;
+
+      expression = {
+        key,
+        type,
+        left: expression,
+        right: this.parseTerm(),
+      };
     }
 
-    const key = this.token().match;
-    const type = this.token().type;
-    ++this.tokenIdx;
-
-    const operator: TreeNode = {
-      key,
-      type,
-      left: expression,
-      right: this.parseTerm(),
-    };
-
-    return operator;
+    return expression;
   }
 
   private parseTerm(): TreeNode {
-    const term = this.parseFactor();
+    let term = this.parseFactor();
 
-    if (
-      !this.token() ||
-      (this.token().type !== "MUL" && this.token().type !== "DIV")
+    while (
+      this.token() &&
+      (this.token().type === "MUL" || this.token().type === "DIV")
     ) {
-      return term;
+      const key = this.token().match;
+      const type = this.token().type;
+      ++this.tokenIdx;
+
+      term = {
+        key,
+        type,
+        left: term,
+        right: this.parseFactor(),
+      };
     }
 
-    const key = this.token().match;
-    const type = this.token().type;
-    ++this.tokenIdx;
-
-    const operator: TreeNode = {
-      key,
-      type,
-      left: term,
-      right: this.parseFactor(),
-    };
-
-    return operator;
+    return term;
   }
 
   private parseFactor(): TreeNode {
@@ -109,7 +84,7 @@ export class Parser {
       const expression = this.parseExpression();
 
       if (!this.token() || this.token().type !== "RPAREN") {
-        throw new Error(`Missing closing parenthesis at ${lparenIdx}`);
+        throw new SyntaxError(`Missing closing parenthesis at ${lparenIdx}`);
       }
 
       ++this.tokenIdx;

@@ -17,6 +17,10 @@ export class Lexer {
   }
 
   private postProcess(tokens: TokenMatch[]): TokenMatch[] {
+    if (this.input.length > 0 && tokens.length === 0) {
+      throw new SyntaxError(`Invalid token at 0`);
+    }
+
     // Sum adjacent NUMBER tokens
     const newTokens: TokenMatch[] = [];
 
@@ -77,6 +81,11 @@ export class Lexer {
       }
 
       ++count;
+    }
+
+    // Verify if all the input characters were tokenized
+    if (start < fmtInput.length) {
+      throw new SyntaxError(`Invalid token at ${start}`);
     }
 
     // Post-process the tokens

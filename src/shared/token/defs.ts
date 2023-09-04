@@ -1,14 +1,14 @@
 import { Token, TokenOperators } from "./types";
 
 export const TOKEN_PATTERNS: Token[] = [
-  { type: "NUMBER", pattern: /\d+/ },
-  { type: "PLUS", pattern: /\+/ },
-  { type: "MINUS", pattern: /-/ },
-  { type: "MUL", pattern: /\*/ },
-  { type: "DIV", pattern: /\// },
-  { type: "LPAREN", pattern: /\(/ },
-  { type: "RPAREN", pattern: /\)/ },
-  { type: "DOT", pattern: /\./ },
+  { type: "NUMBER", pattern: /^\d+$/ },
+  { type: "PLUS", pattern: /^\+$/ },
+  { type: "MINUS", pattern: /^-$/ },
+  { type: "MUL", pattern: /^\*$/ },
+  { type: "DIV", pattern: /^\/$/ },
+  { type: "LPAREN", pattern: /^\($/ },
+  { type: "RPAREN", pattern: /^\)$/ },
+  { type: "DOT", pattern: /^\.$/ },
 ];
 
 type OperatorFunction = (a: number, b: number) => number;
