@@ -11,12 +11,15 @@ Factor -> ( Expression )
 | Number
 */
 
+import { setupKeys } from "./keys";
 import { Interpreter } from "./steps/interpreter";
 import { Lexer } from "./steps/lexer";
 import { Parser } from "./steps/parser";
 
 const exprInput = document.getElementById("expr-input") as HTMLInputElement;
 const submitBtn = document.getElementById("submit-btn") as HTMLButtonElement;
+
+setupKeys();
 
 submitBtn.onclick = () => {
   const input = exprInput.value;
