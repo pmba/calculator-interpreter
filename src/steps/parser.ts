@@ -8,7 +8,10 @@ export interface TreeNode {
 }
 
 function throwUnexpectedToken(token: TokenMatch): never {
-  console.log(token);
+  if (!token) {
+    throw new SyntaxError(`Unexpected EOF`);
+  }
+
   throw new SyntaxError(`Unexpected token: '${token.match}' at ${token.col}`);
 }
 
@@ -75,6 +78,8 @@ export class Parser {
   }
 
   private parseFactor(): TreeNode {
+    if (!this.token()) throwUnexpectedToken(this.token());
+
     if (this.token().type === "NUMBER") {
       return this.parseNumber();
     } else if (this.token().type === "LPAREN") {

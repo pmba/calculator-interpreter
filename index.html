@@ -11,69 +11,63 @@
   <body>
     <div class="container">
       <div class="calculator-layout">
+        <!-- TODO -->
         <div class="display">
-          <input type="text" id="expr-input" />
-          <div id="operation">19,34 + 11,23</div>
-          <div id="result">&equals; 30,75</div>
+          <div id="history"></div>
+          <div id="operation">0</div>
         </div>
 
         <div class="keys">
-          <button id="clear-btn" class="variant-gray" data-key="C">C</button>
-          <button id="divide-btn" class="variant-gray" data-key="()">()</button>
+          <button id="clear" class="variant-gray" data-key="AC">AC</button>
+          <button id="lpar" class="variant-gray" data-key="(">(</button>
+          <button id="rpar" class="variant-gray" data-key=")">)</button>
           <button
-            id="backspace-btn"
-            class="variant-gray unicode-char"
-            data-key="&#9003;"
-          >
-            &#9003;
-          </button>
-          <button
-            id="divide-btn"
+            id="divide"
             class="variant-orange unicode-char"
             data-key="&divide;"
           >
             &divide;
           </button>
 
-          <button id="7-btn" data-key="7">7</button>
-          <button id="8-btn" data-key="8">8</button>
-          <button id="9-btn" data-key="9">9</button>
+          <button id="key-7" data-key="7">7</button>
+          <button id="key-8" data-key="8">8</button>
+          <button id="key-9" data-key="9">9</button>
           <button
-            id="multiply-btn"
+            id="times"
             class="variant-orange unicode-char"
             data-key="&times;"
           >
             &times;
           </button>
 
-          <button id="4-btn" data-key="4">4</button>
-          <button id="5-btn" data-key="5">5</button>
-          <button id="6-btn" data-key="6">6</button>
+          <button id="key-4" data-key="4">4</button>
+          <button id="key-5" data-key="5">5</button>
+          <button id="key-6" data-key="6">6</button>
           <button
-            id="subtract-btn"
+            id="minus"
             class="variant-orange unicode-char"
             data-key="&minus;"
           >
             &minus;
           </button>
 
-          <button id="1-btn" data-key="1">1</button>
-          <button id="2-btn" data-key="2">2</button>
-          <button id="3-btn" data-key="3">3</button>
+          <button id="key-1" data-key="1">1</button>
+          <button id="key-2" data-key="2">2</button>
+          <button id="key-3" data-key="3">3</button>
           <button
-            id="add-btn"
+            id="plus"
             class="variant-orange unicode-char"
             data-key="&plus;"
           >
             &plus;
           </button>
 
-          <button id="0-btn" class="colspan-2" data-key="0">0</button>
-          <button id="decimal-btn" class="unicode-char" data-key="&sdot;">
+          <button id="key-0" data-key="0">0</button>
+          <button id="dot" class="unicode-char" data-key="&sdot;">
             &sdot;
           </button>
           <button
-            id="submit-btn"
+            id="equal"
             class="variant-orange unicode-char"
             data-key="&equals;"
           >

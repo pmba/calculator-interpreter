@@ -127,12 +127,12 @@ body {
       display: none;
     }
 
-    #operation {
+    #history {
       font-size: 20px;
       color: #525d6d;
     }
 
-    #result {
+    #operation {
       font-size: 30px;
     }
   }
@@ -140,17 +140,67 @@ body {
   .keys {
     flex: 2;
     width: 100%;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
     padding: 37px 0px;
+
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-template-areas:
+      "clear lpar rpar divide"
+      "key-7 key-8 key-9 times"
+      "key-4 key-5 key-6 minus"
+      "key-1 key-2 key-3 plus"
+      "key-0 key-0 dot equal";
+
+    #clear {
+      grid-area: clear;
+    }
+
+    #lpar {
+      grid-area: lpar;
+    }
+
+    #rpar {
+      grid-area: rpar;
+    }
+
+    #divide {
+      grid-area: divide;
+    }
+
+    #times {
+      grid-area: times;
+    }
+
+    #minus {
+      grid-area: minus;
+    }
+
+    #plus {
+      grid-area: plus;
+    }
+
+    #dot {
+      grid-area: dot;
+    }
+
+    #equal {
+      grid-area: equal;
+    }
+
+    @for $i from 0 through 9 {
+      #key-#{$i} {
+        grid-area: key-#{$i};
+      }
+    }
   }
 }
 
-.colspan-2 {
-  grid-column: span 2;
-}
+// .colspan-2 {
+//   grid-column: span 2;
+// }
 
-.rowspan-2 {
-  grid-row: span 2;
-}
+// .rowspan-2 {
+//   grid-row: span 2;
+// }

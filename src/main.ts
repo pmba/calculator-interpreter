@@ -11,24 +11,18 @@ Factor -> ( Expression )
 | Number
 */
 
-import { setupKeys } from "./keys";
+import { buttonsDef, clearBtn, equalBtn } from "./buttons";
 import { Interpreter } from "./steps/interpreter";
 import { Lexer } from "./steps/lexer";
 import { Parser } from "./steps/parser";
 
-const exprInput = document.getElementById("expr-input") as HTMLInputElement;
-const submitBtn = document.getElementById("submit-btn") as HTMLButtonElement;
+let inputValue = "0";
 
-setupKeys();
+const operation = document.getElementById("operation");
+const history = document.getElementById("history");
 
-submitBtn.onclick = () => {
-  const input = exprInput.value;
-
-  if (!input) return;
-  const result = evalInput(input);
-
-  exprInput.value = result.toString();
-};
+if (!operation) throw new Error("Operation element not found");
+if (!history) throw new Error("History element not found");
 
 function evalInput(input: string) {
   const lexer = new Lexer(input);
@@ -45,11 +39,29 @@ function evalInput(input: string) {
   return result;
 }
 
-function main() {
-  const input = "(1 + 2) * (3 - 4) / 5";
-  const result = evalInput(input);
+buttonsDef.forEach(({ id, action }) => {
+  const element = document.getElementById(id);
 
-  console.log(result);
-}
+  if (!element) {
+    throw new Error(`Element with id ${id} not found`);
+  }
 
-main();
+  element.addEventListener("click", () => {
+    inputValue = action(inputValue);
+    operation.innerHTML = inputValue;
+  });
+});
+
+clearBtn.addEventListener("click", () => {
+  inputValue = "0";
+  operation.innerHTML = inputValue;
+  history.innerHTML = "";
+});
+
+equalBtn.addEventListener("click", () => {
+  const result = evalInput(inputValue).toString();
+  history.innerHTML = inputValue;
+
+  inputValue = result;
+  operation.innerHTML = result;
+});
