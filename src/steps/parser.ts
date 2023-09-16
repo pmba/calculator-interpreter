@@ -52,6 +52,10 @@ export class Parser {
       };
     }
 
+    if (this.token()) {
+      throwUnexpectedToken(this.token());
+    }
+
     return expression;
   }
 

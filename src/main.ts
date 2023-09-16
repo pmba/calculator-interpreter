@@ -11,30 +11,48 @@ Factor -> ( Expression )
 | Number
 */
 
-import { buttonsDef, clearBtn, equalBtn } from "./buttons";
+import mermaid from "mermaid";
 import { Interpreter } from "./steps/interpreter";
 import { Lexer } from "./steps/lexer";
 import { Parser } from "./steps/parser";
+import { astToString, buildAST } from "./utils/ast";
+import { buttonsDef, clearBtn, equalBtn } from "./utils/buttons";
 
-let inputValue = "0";
+mermaid.initialize({
+  startOnLoad: false,
+});
+
+let inputValue = "";
 
 const operation = document.getElementById("operation");
 const history = document.getElementById("history");
+const astElement = document.getElementById("ast-mermaid");
 
 if (!operation) throw new Error("Operation element not found");
 if (!history) throw new Error("History element not found");
+if (!astElement) throw new Error("AST element not found");
 
-function evalInput(input: string) {
+async function evalInput(input: string) {
   const lexer = new Lexer(input);
   const tokens = lexer.tokenize();
 
   const parser = new Parser(tokens);
   const ast = parser.parse();
 
-  console.log(JSON.stringify(ast, null, 2));
-
   const interpreter = new Interpreter(ast);
   const result = interpreter.interpret();
+
+  const mermaidAST = buildAST(ast);
+
+  if (astElement) {
+    const { svg } = await mermaid.render(
+      "ast-mermaid",
+      astToString(mermaidAST),
+      astElement
+    );
+
+    astElement.innerHTML = svg;
+  }
 
   return result;
 }
@@ -53,7 +71,7 @@ buttonsDef.forEach(({ id, action }) => {
 });
 
 clearBtn.addEventListener("click", () => {
-  inputValue = "0";
+  inputValue = "";
   operation.innerHTML = inputValue;
   history.innerHTML = "";
 });
