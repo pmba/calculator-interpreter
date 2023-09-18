@@ -41,10 +41,10 @@ export function buildAST(root: TreeNode) {
 
     const {
       id,
-      node: { key, type, left, right },
+      node: { key, left, right },
     } = node;
 
-    ast.defs.push(`${id}([${key}]):::${type};`);
+    ast.defs.push(`${id}([${key}]);`);
 
     if (left) {
       const leftId = ID.new();

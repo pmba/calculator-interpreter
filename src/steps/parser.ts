@@ -52,7 +52,7 @@ export class Parser {
       };
     }
 
-    if (this.token()) {
+    if (this.token() && this.token().type !== "RPAREN") {
       throwUnexpectedToken(this.token());
     }
 

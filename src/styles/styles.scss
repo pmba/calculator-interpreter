@@ -13,7 +13,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
   background-color: #fff;
 }
 
@@ -26,9 +25,13 @@ body {
   border-radius: 12px;
   overflow: hidden;
 
+  $height: 600px;
+
   width: 320px;
-  height: 600px;
+  height: $height;
   padding: 0px 19px;
+
+  margin-top: calc((100vh - #{$height}) / 2);
 
   background: linear-gradient(180deg, #242833 0%, #16181d 100%);
 
@@ -128,12 +131,23 @@ body {
     }
 
     #history {
+      max-width: 100%;
+      overflow-x: scroll;
+
       font-size: 20px;
       color: #525d6d;
+      word-break: keep-all;
+      user-select: none;
     }
 
     #operation {
+      max-width: 100%;
+      overflow-x: scroll;
+
       font-size: 30px;
+      word-break: keep-all;
+      white-space: nowrap;
+      user-select: none;
 
       &:empty::before {
         content: "0";
@@ -205,4 +219,55 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.ast {
+  position: relative;
+  min-width: 100%;
+  margin-bottom: 2rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 1px solid #c3c3c3;
+  background-color: #f1f1f1;
+  border-radius: 12px;
+
+  &:not(:empty)::after {
+    position: absolute;
+    left: 16px;
+    top: 12px;
+
+    content: "AST";
+    font-weight: 600;
+    color: #565656;
+  }
+
+  .mermaid .error-text {
+    display: none;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 3px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgba($color: #000000, $alpha: 0.1);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba($color: #888, $alpha: 0.3);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba($color: #555, $alpha: 0.3);
 }

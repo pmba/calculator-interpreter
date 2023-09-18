@@ -46,7 +46,7 @@ async function evalInput(input: string) {
 
   if (astElement) {
     const { svg } = await mermaid.render(
-      "ast-mermaid",
+      "astMermaid",
       astToString(mermaidAST),
       astElement
     );
@@ -67,6 +67,8 @@ buttonsDef.forEach(({ id, action }) => {
   element.addEventListener("click", () => {
     inputValue = action(inputValue);
     operation.innerHTML = inputValue;
+    operation.focus();
+    operation.scrollLeft = operation.scrollWidth;
   });
 });
 
@@ -76,10 +78,17 @@ clearBtn.addEventListener("click", () => {
   history.innerHTML = "";
 });
 
-equalBtn.addEventListener("click", () => {
-  const result = evalInput(inputValue).toString();
-  history.innerHTML = inputValue;
+equalBtn.addEventListener("click", async () => {
+  try {
+    const result = (await evalInput(inputValue)).toString();
+    history.innerHTML = inputValue;
 
-  inputValue = result;
-  operation.innerHTML = result;
+    inputValue = result;
+    operation.innerHTML = result;
+  } catch (err) {
+    console.error(err);
+
+    history.innerHTML = "";
+    operation.innerHTML = "ERROR!";
+  }
 });
