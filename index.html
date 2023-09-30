@@ -2,13 +2,24 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <!-- <a href="https://iconscout.com/icons/calculator" class="text-underline font-size-sm" target="_blank">Free Calculator  Icon</a> by <a href="https://iconscout.com/contributors/icon-mafia" class="text-underline font-size-sm" target="_blank">Icon Mafia</a> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Calculator Grammar</title>
+    <title>Calculator Interpreter - SyntaxTree Visualizer</title>
+    <meta
+      name="description"
+      content="A calculator interpreter written in TypeScript"
+    />
 
     <link rel="stylesheet" href="/src/styles/styles.scss" />
   </head>
   <body>
+    <div class="links">
+      <a target="_blank" href="https://github.com/pmba/calculator-interpreter"
+        >Github</a
+      >
+    </div>
+
     <div class="container">
       <div class="calculator-layout">
         <div class="display">
@@ -75,9 +86,7 @@
         </div>
       </div>
 
-      <div class="ast">
-        <pre id="ast-mermaid" class="mermaid"></pre>
-      </div>
+      <div id="ast-mermaid" class="ast mermaid"></div>
     </div>
 
     <script type="module" src="/src/main.ts"></script>
