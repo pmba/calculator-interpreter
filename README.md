@@ -25,6 +25,15 @@ Number: Digit Number
 Digit: '0-9'
 ```
 
+## Installation & Setup
+
+```bash
+git clone https://github.com/pmba/calculator-interpreter
+cd calculator-interpreter
+yarn # or npm install
+yarn dev # or npm run dev
+```
+
 ## TODO
 
 - [x] Lexer
