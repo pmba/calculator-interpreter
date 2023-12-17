@@ -4,6 +4,10 @@
 
 This is a simple calculator interpreter written in Typescript.
 
+## Preview
+
+Check the preview at https://calculator.pmba.dev/
+
 ## Grammar
 
 ```
